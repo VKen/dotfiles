@@ -1,11 +1,9 @@
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/projects/repos/oh-my-zsh
 
-# Set name of the theme to load.
+# Set to the name theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-export ZSH_THEME="robbyrussell"
+export ZSH_THEME="dogenpunk"
 
 # Set to this to use case-sensitive completion
 # export CASE_SENSITIVE="true"
@@ -27,15 +25,67 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-# Personal Pathing
 PATH=$PATH:/home/kenneth/google_appengine
-PATH=$PATH:/var/lib/gems/1.9.1/bin
+PATH=$PATH:/home/kenneth/bin
+PATH=$PATH:/var/lib/gems/1.8/bin
+export PIP_RESPECT_VIRTUALENV=true
 
 # Alias
+
+alias prs='python manage.py runserver'
+alias psp='python manage.py shell_plus'
+alias prsp='python manage.py runserver_plus'
 alias prs2.5='python2.5 manage.py runserver'
+alias ea='source env/bin/activate'
+alias pyserv='python -m SimpleHTTPServer'
 
 # Functions
 
-opj () {
-    cd ~/projects/$1
+# open project
+opj() {
+    deactivate 2> /dev/null
+    cd ~/projects/
+    if [[ $# -eq 1 ]]; then
+        cd $1
+        if [ -d 'env' ]; then
+            source env/bin/activate 2> /dev/null
+        fi
+    fi
+}
+
+# opj auto-completion
+_opj() {
+    _files -/ -W '/home/kenneth/projects/'
+}
+
+#open repo
+opr() {
+    deactivate 2> /dev/null
+    cd ~/projects/repos/
+    if [[ $# -eq 1 ]]; then
+        cd $1
+    fi
+}
+#open repo auto-completion
+_opr() {
+    _files -/ -W '/home/kenneth/projects/repos/'
+}
+
+# django runserver
+djrs() {
+    if grep -q "django_extensions" settings*.py; then
+        python manage.py runserver_plus $*
+    else
+        python manage.py runserver_plus  $*
+    fi
+}
+
+# ack-grep open
+ack-open() {
+    local x="`ack-grep -l $* | xargs`"
+    if [[ -n $x ]]; then
+        command gvim -c `echo "/$*[-1]"` `echo "$x"`
+    else
+        echo "no files found"
+    fi
 }
