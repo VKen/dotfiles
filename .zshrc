@@ -25,7 +25,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-PATH=$PATH:/home/kenneth/google_appengine
+#PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/home/kenneth/bin
 PATH=$PATH:/var/lib/gems/1.8/bin
 export PIP_RESPECT_VIRTUALENV=true
@@ -33,8 +33,8 @@ export PIP_RESPECT_VIRTUALENV=true
 # Alias
 
 alias prs='python manage.py runserver'
-alias psp='python manage.py shell_plus'
-alias prsp='python manage.py runserver_plus'
+#alias psp='python manage.py shell_plus'
+#alias prsp='python manage.py runserver_plus'
 alias prs2.5='python2.5 manage.py runserver'
 alias ea='source env/bin/activate'
 alias pyserv='python -m SimpleHTTPServer'
@@ -69,6 +69,22 @@ opr() {
 #open repo auto-completion
 _opr() {
     _files -/ -W '/home/kenneth/projects/repos/'
+}
+
+prsp() {
+    if ls ./apps/settings | grep -q "dev_kenneth"; then
+        python manage.py runserver_plus --settings=apps.settings.dev_kenneth
+    else
+        python manage.py runserver_plus
+    fi
+}
+
+psp() {
+    if ls ./apps/settings | grep -q "dev_kenneth"; then
+        python manage.py shell_plus --settings=apps.settings.dev_kenneth
+    else
+        python manage.py shell_plus
+    fi
 }
 
 # django runserver
