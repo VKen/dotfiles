@@ -51,6 +51,9 @@ opj() {
             source env/bin/activate 2> /dev/null
         fi
     fi
+    if ls ./apps/settings 2> /dev/null | grep -q "dev_kenneth"; then
+        export DJANGO_SETTINGS_MODULE=apps.settings.dev_kenneth
+    fi
 }
 
 # opj auto-completion
