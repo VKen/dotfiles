@@ -5,16 +5,18 @@
 "modern vim, forget about vi compatibility
 set nocompatible
 
-set rtp+=~/.vim/vundle.git/
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+Bundle 'gmarik/vundle'
 
 "Original repos on github
 Bundle 'airblade/vim-rooter'
 Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'gregsexton/gitv'
+Bundle 'scrooloose/syntastic'
 Bundle 'hallettj/jslint.vim'
-Bundle 'kevinw/pyflakes-vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kogakure/vim-sparkup'
 Bundle 'marcusm/python_ifold'
@@ -24,8 +26,10 @@ Bundle 'pangloss/vim-javascript'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim'
+Bundle '2072/PHP-Indenting-for-VIm'
 "Bundle 'Shougo/neocomplcache'
-Bundle 'sjl/threesome.vim'
+"Bundle 'sjl/threesome.vim'
+Bundle 'sjl/splice.vim'
 Bundle 'sukima/xmledit'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-haml'
@@ -282,8 +286,10 @@ set pastetoggle=<F12>
 nmap <leader>y "+y
 vmap <leader>y "+y
 "Paste from X CLIPBOARD
-nmap <leader>p "+gP
-vmap <leader>p "+gP
+nmap <leader>p "+gp
+vmap <leader>p "+gp
+nmap <leader>P "+gP
+vmap <leader>P "+gP
 
 nnoremap <leader>/ :noh<cr>
 
@@ -291,6 +297,10 @@ nnoremap <leader>/ :noh<cr>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
+
+"easy buffer switching
+nnoremap <C-Tab> :bnext<cr>
+nnoremap <C-S-Tab> :bprevious<cr>
 
 "save on losing focus, saves file when tabbing away from the editor
 "do not save if buffer is untitled
@@ -331,7 +341,7 @@ nnoremap vv <C-v>
 "nnoremap vv <C-v>
 
 " ; is an alias for :
-nnoremap ; :
+"nnoremap ; :
 
 " Draw lines of dashes or equal signs based on the length of the line
 " immediately above.
@@ -469,13 +479,13 @@ let delimitMate_balance_matchpairs = 1
 au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" threesome
+" splice formerly threesome
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let threesome_initial_layout_grid = 1
-let threesome_initial_scrollbind_grid = 1
-let threesome_initial_scrollbind_loupe = 1
-let threesome_initial_scrollbind_compare = 1
-let threesome_initial_scrollbind_path = 1
+let splice_initial_layout_grid = 1
+let splice_initial_scrollbind_grid = 1
+let splice_initial_scrollbind_loupe = 1
+let splice_initial_scrollbind_compare = 1
+let splice_initial_scrollbind_path = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HTML
@@ -498,7 +508,6 @@ au BufNewFile,BufRead *.coffee set filetype=coffee
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 let python_highlight_all=1
-let pyflakes_use_quickfix=0
 
 au FileType python setlocal colorcolumn=80 foldcolumn=0
 
@@ -520,3 +529,9 @@ au BufRead,BufNewFile *.html call DetectJinja()
 " Automatic checking of pep8 compliance when saving
 au BufWrite *.py call Pep8()
 
+" Actionscript
+
+au BufNewFile,BufRead *.as set filetype=javascript
+
+" Automatic syntax highlighting for twig templates
+au BufRead,BufNewFile *.html.twig set filetype=htmldjango
