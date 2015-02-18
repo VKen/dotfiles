@@ -1,0 +1,90 @@
+Host StagingAPI_(54.255.23.167)
+Hostname 54.255.23.167
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host StagingUX_(54.251.226.96)
+Hostname 54.251.226.96
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host StagingDB_old_(54.255.3.253)
+Hostname 54.255.3.253
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host StagingDB_(54.255.70.70)
+Hostname 54.255.70.70
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host ProdUX1_(54.254.2.81)
+Hostname 54.254.2.81
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host ProdMRSGUX1_(54.179.96.110)
+Hostname 54.179.96.110
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/boss-mrsg.pem
+
+Host ProdUX2_(54.251.233.50)
+Hostname 54.251.233.50
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host ProdMRSGUX2_(54.179.47.231)
+Hostname 54.179.47.231
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/boss-mrsg.pem
+
+Host GridAPI1_(54.255.22.178)
+Hostname 54.255.22.178
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host ProdMRSGAPI1_(54.255.45.193)
+Hostname 54.255.45.193
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/boss-mrsg.pem
+
+Host GridAPI2_(54.254.72.64)
+Hostname 54.254.72.64
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host ProdMRSGAPI2_(54.179.2.251)
+Hostname 54.179.2.251
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/boss-mrsg.pem
+
+Host MR_API_(46.137.247.247)
+Hostname 46.137.247.247
+User ec2-user
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host MR_SECURE_(46.137.248.198)
+Hostname 46.137.248.198
+User ec2-user
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host MR_API_Equinox_Tunnel
+Hostname localhost
+Port 4567
+User kenneth
+IdentityFile /home/kenneth/.ssh/id_rsa
+
+Host MR_EVENT_(54.251.202.29)
+Hostname 54.251.202.29
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host BOSS_DB_(54.251.21.54)
+Hostname 54.251.21.54
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
+
+Host NZ_SFTP(54.66.156.138)
+Hostname 54.66.156.138
+User root
+IdentityFile /home/kenneth/projects/myrepublic/sftpnz.pem
