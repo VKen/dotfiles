@@ -43,7 +43,6 @@ alias prs='python manage.py runserver'
 #alias psp='python manage.py shell_plus'
 #alias prsp='python manage.py runserver_plus'
 alias prs2.5='python2.5 manage.py runserver'
-alias ea='source env/bin/activate'
 alias pyserv='python -m SimpleHTTPServer'
 alias aprs='sudo /etc/init.d/apache2 restart'
 
@@ -88,6 +87,11 @@ opj() {
     if ls ./apps/settings 2> /dev/null | grep -q "dev_kenneth"; then
         export DJANGO_SETTINGS_MODULE=apps.settings.dev_kenneth
     fi
+
+    if ls ./.env 2> /dev/null; then
+        # export environmental variables for django=configurations
+        export $(cat .env | grep -v ^# | xargs)
+    fi
 }
 
 # opj auto-completion
@@ -107,6 +111,10 @@ opr() {
 _opr() {
     _files -/ -W '/home/kenneth/projects/repos/'
 }
+
+# autocompletion linking
+compdef _opj opj
+compdef _opr opr
 
 prsp() {
     if ls ./apps/settings | grep -q "dev_kenneth"; then
@@ -140,6 +148,26 @@ ack-open() {
         command gvim -c `echo "/$*[-1]"` `echo "$x"`
     else
         echo "no files found"
+    fi
+}
+
+# activate env and export .env file variables if any
+ea() {
+    if ls | grep -q 'env'; then
+        source ./env/bin/activate
+    fi
+    if ls ./.env 2> /dev/null | grep -q '.env'; then
+        export $(cat .env | grep -v ^# | xargs)
+        echo 'populated django env vars'
+    fi
+}
+
+
+dea() {
+    deactivate
+    if ls ./.env 2> /dev/null; then
+        unset $(cat .env | grep -v ^# | xargs)
+        echo 'unset django env vars'
     fi
 }
 
