@@ -84,7 +84,27 @@ Hostname 54.251.21.54
 User ubuntu
 IdentityFile /home/kenneth/projects/myrepublic/myrepublic.pem
 
-Host NZ_SFTP(54.66.156.138)
+Host NZ_SFTP_(54.66.156.138)
 Hostname 54.66.156.138
 User root
 IdentityFile /home/kenneth/projects/myrepublic/sftpnz.pem
+
+HOST ID_AP_ST_(boss-ap-st.myrepublic.co.id)
+Hostname boss-ap-st.myrepublic.co.id
+User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_UX_ST_(boss-ux-st.myrepublic.co.id)
+Hostname boss-ux-st.myrepublic.co.id
+User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_API_ST_(api-st.myrepublic.co.id)
+Hostname api-st.myrepublic.co.id
+User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_ORDER_ST_(order-st.myrepublic.co.id)
+Hostname order-st.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
