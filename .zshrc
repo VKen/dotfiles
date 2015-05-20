@@ -27,11 +27,11 @@ source $ZSH/oh-my-zsh.sh
 
 #PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/home/kenneth/bin
-PATH=$PATH:/var/lib/gems/1.8/bin
+#PATH=$PATH:/var/lib/gems/1.8/bin
 export PIP_RESPECT_VIRTUALENV=true
 
 # updated ruby version
-PATH=$PATH:/home/kenneth/.gem/ruby/2.1.0/bin
+PATH=$PATH:/home/kenneth/.gem/ruby/2.2.0/bin
 
 # fix grep
 my_grep_options=(--color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn)
