@@ -89,9 +89,19 @@ Hostname 54.66.156.138
 User root
 IdentityFile /home/kenneth/projects/myrepublic/sftpnz.pem
 
+HOST ID_AP_PD_01_(boss-mrid-ap-01.myrepublic.co.id)
+Hostname boss-mrid-ap-01.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
 HOST ID_AP_ST_(boss-ap-st.myrepublic.co.id)
 Hostname boss-ap-st.myrepublic.co.id
 User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_UX_PD_01_(boss-mrid-ux-01.myrepublic.co.id)
+Hostname boss-mrid-ux-01.myrepublic.co.id
+User ubuntu
 IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
 
 HOST ID_UX_ST_(boss-ux-st.myrepublic.co.id)
@@ -106,5 +116,45 @@ IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
 
 HOST ID_ORDER_ST_(order-st.myrepublic.co.id)
 Hostname order-st.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_MYACCOUNT_ST_(myaccount-st.myrepublic.co.id)
+Hostname myaccount-st.myrepublic.co.id
+User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_MYACCOUNT_PD_01_(boss-mrid-cp-01.myrepublic.co.id)
+Hostname boss-mrid-cp-01.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_ORDER_PD_01_(boss-mrid-cp-01.myrepublic.co.id)
+Hostname boss-mrid-cp-01.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_CRON_AP_PD_(boss-mrid-cr-ap-01.myrepublic.co.id)
+Hostname boss-mrid-cr-ap-01.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_DB_MAIN_PD_(boss-db-mn.myrepublic.co.id)
+Hostname boss-db-mn.myrepublic.co.id
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST SG_MPP_Prod(mpp-portal.myrepublic.com.sg)
+Hostname mpp-portal.myrepublic.com.sg
+User ubuntu
+IdentityFile /home/kenneth/projects/myrepublic/boss-mrsg.pem
+
+HOST ID_GO_ST_(go-st.myrepublic.co.id)
+Hostname go-st.myrepublic.co.id
+User root
+IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
+
+HOST ID_GO_PD_01_(boss-mrid-cp-01.myrepublic.co.id)
+Hostname boss-mrid-cp-01.myrepublic.co.id
 User ubuntu
 IdentityFile /home/kenneth/projects/myrepublic/indokey.pem
