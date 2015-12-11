@@ -25,6 +25,11 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# ibus
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+
 #PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/home/kenneth/bin
 #PATH=$PATH:/var/lib/gems/1.8/bin
@@ -32,6 +37,8 @@ export PIP_RESPECT_VIRTUALENV=true
 
 # updated ruby version
 PATH=$PATH:/home/kenneth/.gem/ruby/2.2.0/bin
+# PsySH for php
+PATH=$PATH:/home/kenneth/.composer/vendor/bin
 
 # fix grep
 my_grep_options=(--color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn)
@@ -141,9 +148,9 @@ djrs() {
     fi
 }
 
-# ack-grep open
+# ack open
 ack-open() {
-    local x="`ack-grep -l $* | xargs`"
+    local x="`ack -l $* | xargs`"
     if [[ -n $x ]]; then
         command gvim -c `echo "/$*[-1]"` `echo "$x"`
     else
