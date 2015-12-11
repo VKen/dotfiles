@@ -9,15 +9,16 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
+Bundle 'VundleVim/Vundle.vim'
 
 "Original repos on github
-Bundle 'airblade/vim-rooter'
+"Bundle 'airblade/vim-rooter'
 Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'gregsexton/gitv'
 Bundle 'scrooloose/syntastic'
-Bundle 'hallettj/jslint.vim'
+Bundle 'wookiehangover/jshint.vim'
 Bundle 'kchmck/vim-coffee-script'
 "Bundle 'kogakure/vim-sparkup'
 Bundle 'marcusm/python_ifold'
@@ -54,6 +55,8 @@ Bundle 'pythoncomplete'
 Bundle 'renamer.vim'
 Bundle 'The-NERD-Commenter'
 Bundle 'vim-indent-object'
+"Bundle 'phpfolding.vim'
+"Bundle 'VisIncr'
 "Bundle 'VimClojure'
 Bundle 'ZoomWin'
 
@@ -408,9 +411,9 @@ nnoremap k gk
 " Ctrl-P
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_dotfiles = 0
-let g:ctrlp_mru_files = 1
+"let g:ctrlp_mru_files = 1
 let g:ctrlp_use_caching = 1
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 20
 
 " search project directory
@@ -454,7 +457,8 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 " NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <silent> <F7> :Rooter<cr>:NERDTreeToggle
+let g:rooter_disable_map = 1
+"nmap <silent> <F7> :Rooter<cr>:NERDTreeToggle
 let NERDChristmasTree=1
 let NERDTreeCaseSensitiveSort = 1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
