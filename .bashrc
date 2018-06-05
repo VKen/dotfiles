@@ -99,7 +99,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Personal Alias
-alias act='source env/bin/activate' 
+alias act='source env/bin/activate'
 alias prsp='python manage.py runserver_plus'
 alias prs='python manage.py runserver'
 alias prs2.5='python2.5 manage.py runserver'
@@ -107,3 +107,10 @@ alias prs2.5='python2.5 manage.py runserver'
 # Personal Pathing
 PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/var/lib/gems/1.8/bin
+
+# IBUS Settings
+#export GTK_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
+# start ibus
+#ibus-daemon -drx

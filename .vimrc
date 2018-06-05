@@ -66,6 +66,9 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
+"" Enable omnicompletion together with tag bar
+set omnifunc=syntaxcomplete#Complete
+
 "check if running in terminal and set to 256 colors
 if !has('gui_running')
     set t_Co=256
