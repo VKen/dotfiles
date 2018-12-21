@@ -18,8 +18,8 @@ Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'gregsexton/gitv'
 Bundle 'scrooloose/syntastic'
-Bundle 'wookiehangover/jshint.vim'
-Bundle 'kchmck/vim-coffee-script'
+"Bundle 'wookiehangover/jshint.vim'
+"Bundle 'kchmck/vim-coffee-script'
 "Bundle 'kogakure/vim-sparkup'
 Bundle 'marcusm/python_ifold'
 "Bundle 'ocim/htmljinja.vim'
@@ -31,7 +31,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle '2072/PHP-Indenting-for-VIm'
 "Bundle 'Shougo/neocomplcache'
 "Bundle 'sjl/threesome.vim'
-Bundle 'sjl/splice.vim'
+Bundle 'albfan/splice.vim'
 Bundle 'sukima/xmledit'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-haml'
@@ -44,6 +44,8 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle 'rickhowe/diffchar.vim'
+Bundle 'chrisbra/SudoEdit.vim'
 
 "Vim Scripts Repos
 Bundle 'EasyMotion'
@@ -59,6 +61,10 @@ Bundle 'vim-indent-object'
 "Bundle 'VisIncr'
 "Bundle 'VimClojure'
 Bundle 'ZoomWin'
+Bundle 'drmikehenry/vim-fontsize'
+Plugin 'universal-ctags/ctags'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'majutsushi/tagbar'
 
 call vundle#end()
 
@@ -159,7 +165,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")|execute("normal 
 set wildmode=list:longest,list:full
 set wildmenu
 "ignore certain types of files on completion
-set wildignore+=*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*.sqlite,_generated_media,imported-sass-frameworks,env,uploads
+set wildignore+=*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*.sqlite,_generated_media,imported-sass-frameworks,env,uploads,*/tmp/*,*.swp
 set completeopt=menu,preview,longest
 set pumheight=15 "menu contains a max of 15 items
 
@@ -205,7 +211,11 @@ set listchars=tab:▸\ ,eol:¬ "textmate style listing of invisible chars
 
 " Remove trailing whitespace from end of file
 autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufEnter * lcd %:p:h
+
+" the commands below clashes with gitv
+let lcd_blacklist = ['gitv', 'help']
+autocmd BufEnter if index(lcd_blacklist, &ft) < 0 | lcd %:p:h
+"autocmd BufEnter * lcd %:p:h
 
 " automatically give executable permissions if file begins with #! and contains
 " '/bin/' in the path
@@ -247,6 +257,21 @@ nmap <c-s> :up<CR>
 imap <c-s> <Esc>:up<CR>a
 vmap <c-s> :up<CR>
 
+" Tagbar mapping
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_ctags_bin = "/usr/bin/ctags"
+
+" set tag file location
+set tags+=./tags;/,tags
+
+" gutentags tagfile location
+"let g:gutentags_cache_dir = g:gutentags_project_root . ./.git/
+
+" completion enhancement
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
 " L is easier to type, and I never use the default behavior.
 noremap L $
 
@@ -270,6 +295,7 @@ hi PmenuSel guibg=#555555 guifg=#FFFFFF
 "spacebar to open or close a fold
 nnoremap <space> za
 vnoremap <space> za
+
 
 "Search the current file for the word under the cursor and display matches
 nmap <silent> ,gw
@@ -418,6 +444,21 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_use_caching = 1
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 20
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_extensions = ['tag']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:30'
+
+" The ripgrep
+if executable('rg')
+  " Use ag over grep
+  set grepprg=rg\ --color=never
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " search project directory
 noremap <leader>ff :CtrlP<cr>
@@ -431,6 +472,8 @@ noremap <leader>fa :CtrlPMixed<cr>
 noremap <leader>fr :CtrlP<cr><c-r>
 "search current directory
 noremap <leader>fd :CtrlPCurFile<cr>
+
+noremap <leader>. :CtrlPTag<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual Search
@@ -476,6 +519,7 @@ let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let miniBufExplMapCTabSwitchBufs = 1
 " let miniBufExplModSelTarget = 1
 let miniBufExplUseSingleClick = 1
+"let g:miniBufExplAutoStart = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sparkup
