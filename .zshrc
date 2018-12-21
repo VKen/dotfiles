@@ -26,9 +26,10 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 # ibus
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+#export GTK_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
+#ibus-daemon -drx
 
 #PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/home/kenneth/bin
@@ -50,7 +51,7 @@ alias prs='python manage.py runserver'
 #alias psp='python manage.py shell_plus'
 #alias prsp='python manage.py runserver_plus'
 alias prs2.5='python2.5 manage.py runserver'
-alias pyserv='python -m SimpleHTTPServer'
+alias pyserv='python2 -m SimpleHTTPServer'
 alias aprs='sudo /etc/init.d/apache2 restart'
 
 #alias mrtun='ssh -p 8443 kenneth@103.241.63.30 -L 8003:54.255.22.178:80 -N' # Production
@@ -180,3 +181,9 @@ dea() {
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+export MAKEFLAGS="-j$(expr $(nproc))"
+
+### make edits default to gvim
+export VISUAL='gvim -f'
+export EDITOR="$VISUAL"
+export GIT_EDITOR="$VISUAL"
