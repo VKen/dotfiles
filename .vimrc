@@ -16,12 +16,12 @@ Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
 Bundle 'gregsexton/gitv'
 Bundle 'scrooloose/syntastic'
-Bundle 'hallettj/jslint.vim'
+"Bundle 'hallettj/jslint.vim'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'kogakure/vim-sparkup'
 Bundle 'marcusm/python_ifold'
-Bundle 'ocim/htmljinja.vim'
-Bundle 'othree/html5.vim'
+"Bundle 'ocim/htmljinja.vim'
+"Bundle 'othree/html5.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
@@ -54,6 +54,7 @@ Bundle 'The-NERD-Commenter'
 Bundle 'vim-indent-object'
 "Bundle 'VimClojure'
 Bundle 'ZoomWin'
+Bundle 'drmikehenry/vim-fontsize'
 
 ""Enable loading filetype and indentation plugins
 filetype plugin indent on
@@ -408,6 +409,13 @@ let g:ctrlp_mru_files = 1
 let g:ctrlp_use_caching = 1
 let g:ctrlp_working_path_mode = 2
 let g:ctrlp_max_height = 20
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|DS_Store|target|dist|build)|(\.(swp|ico|git|svn))$'
+
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 " search project directory
 noremap <leader>ff :CtrlP<cr>
@@ -476,7 +484,7 @@ let sparkupExecuteMapping = '<leader>z'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let delimitMate_autoclose = 1
 let delimitMate_balance_matchpairs = 1
-au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:}"
+"au FileType xml,html,xhtml let b:delimitMate_matchpairs = \"(:),[:],{:}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " splice formerly threesome
@@ -490,11 +498,11 @@ let splice_initial_scrollbind_path = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HTML
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let xml_use_xhtml = 1
+"let xml_use_xhtml = 1
 let html_use_css = 1
 let html_number_lines = 0
-let use_xhtml = 1
-au FileType html imap <buffer> <tab> <c-p>
+"let use_xhtml = 1
+"au FileType html imap <buffer> <tab> <c-p>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Javascript / Coffeescript
@@ -524,7 +532,7 @@ function! DetectJinja()
 endfun
 
 " Automatic syntax highlighting for jinja files
-au BufRead,BufNewFile *.html call DetectJinja()
+"au BufRead,BufNewFile *.html call DetectJinja()
 
 " Automatic checking of pep8 compliance when saving
 au BufWrite *.py call Pep8()
@@ -534,4 +542,4 @@ au BufWrite *.py call Pep8()
 au BufNewFile,BufRead *.as set filetype=javascript
 
 " Automatic syntax highlighting for twig templates
-au BufRead,BufNewFile *.html.twig set filetype=htmldjango
+"au BufRead,BufNewFile *.html.twig set filetype=htmldjango
