@@ -98,7 +98,7 @@ opj() {
 
     if ls ./.env 2> /dev/null; then
         # export environmental variables for django=configurations
-        export $(cat .env | grep -v ^# | xargs)
+        export "$(cat .env | grep -v ^# | grep -v ^$ | xargs -0)"
     fi
 }
 
