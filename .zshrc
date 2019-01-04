@@ -25,10 +25,25 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# ibus
+#export GTK_IM_MODULE=ibus
+#export XMODIFIERS=@im=ibus
+#export QT_IM_MODULE=ibus
+#ibus-daemon -drx
+
 #PATH=$PATH:/home/kenneth/google_appengine
 PATH=$PATH:/home/kenneth/bin
-PATH=$PATH:/var/lib/gems/1.8/bin
+#PATH=$PATH:/var/lib/gems/1.8/bin
 export PIP_RESPECT_VIRTUALENV=true
+
+# updated ruby version
+PATH=$PATH:/home/kenneth/.gem/ruby/2.2.0/bin
+# PsySH for php
+PATH=$PATH:/home/kenneth/.composer/vendor/bin
+
+# fix grep
+my_grep_options=(--color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn)
+alias grep='grep $my_grep_options' egrep='grep -E $my_grep_options' fgrep='grep -F $my_grep_options'
 
 # Alias
 
@@ -36,8 +51,9 @@ alias prs='python manage.py runserver'
 #alias psp='python manage.py shell_plus'
 #alias prsp='python manage.py runserver_plus'
 alias prs2.5='python2.5 manage.py runserver'
-alias ea='source env/bin/activate'
-alias pyserv='python -m SimpleHTTPServer'
+alias pyserv='python2 -m SimpleHTTPServer'
+alias aprs='sudo /etc/init.d/apache2 restart'
+
 
 # Functions
 
@@ -53,6 +69,11 @@ opj() {
     fi
     if ls ./apps/settings 2> /dev/null | grep -q "dev_kenneth"; then
         export DJANGO_SETTINGS_MODULE=apps.settings.dev_kenneth
+    fi
+
+    if ls ./.env 2> /dev/null; then
+        # export environmental variables for django=configurations
+        export "$(cat .env | grep -v ^# | grep -v ^$ | xargs -0)"
     fi
 }
 
@@ -73,6 +94,10 @@ opr() {
 _opr() {
     _files -/ -W '/home/kenneth/projects/repos/'
 }
+
+# autocompletion linking
+compdef _opj opj
+compdef _opr opr
 
 prsp() {
     if ls ./apps/settings | grep -q "dev_kenneth"; then
@@ -108,3 +133,32 @@ ack-open() {
         echo "no files found"
     fi
 }
+
+# activate env and export .env file variables if any
+ea() {
+    if ls | grep -q 'env'; then
+        source ./env/bin/activate
+    fi
+    if ls ./.env 2> /dev/null | grep -q '.env'; then
+        export $(cat .env | grep -v ^# | xargs)
+        echo 'populated django env vars'
+    fi
+}
+
+
+dea() {
+    deactivate
+    if ls ./.env 2> /dev/null; then
+        unset $(cat .env | grep -v ^# | xargs)
+        echo 'unset django env vars'
+    fi
+}
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+export MAKEFLAGS="-j$(expr $(nproc))"
+
+### make edits default to gvim
+export VISUAL='gvim -f'
+export EDITOR="$VISUAL"
+export GIT_EDITOR="$VISUAL"

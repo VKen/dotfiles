@@ -4,24 +4,28 @@
 
 "modern vim, forget about vi compatibility
 set nocompatible
+filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"set rtp+=~/.vim/bundle/vundle/
+"call vundle#rc()
 
-Bundle 'gmarik/vundle'
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Bundle 'VundleVim/Vundle.vim'
 
 "Original repos on github
-Bundle 'airblade/vim-rooter'
+"Bundle 'airblade/vim-rooter'
 Bundle 'ervandew/supertab'
 Bundle 'fholgado/minibufexpl.vim'
-Bundle 'gregsexton/gitv'
-Bundle 'scrooloose/syntastic'
-"Bundle 'hallettj/jslint.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'kogakure/vim-sparkup'
+Bundle 'vim-syntastic/syntastic'
+"Bundle 'scrooloose/syntastic'
+"Bundle 'wookiehangover/jshint.vim'
+"Bundle 'kchmck/vim-coffee-script'
+"Bundle 'kogakure/vim-sparkup'
 Bundle 'marcusm/python_ifold'
 "Bundle 'ocim/htmljinja.vim'
-"Bundle 'othree/html5.vim'
+Bundle 'othree/html5.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/nerdtree'
@@ -29,18 +33,22 @@ Bundle 'kien/ctrlp.vim'
 Bundle '2072/PHP-Indenting-for-VIm'
 "Bundle 'Shougo/neocomplcache'
 "Bundle 'sjl/threesome.vim'
-Bundle 'sjl/splice.vim'
+Bundle 'albfan/splice.vim'
 Bundle 'sukima/xmledit'
 Bundle 'tpope/vim-fugitive'
+Bundle 'gregsexton/gitv'
 Bundle 'tpope/vim-haml'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-vividchalk'
-Bundle 'tsaleh/vim-matchit'
+"Bundle 'tsaleh/vim-matchit'
+Bundle 'tmhedberg/matchit'
 "Snipmate dependencies
 Bundle 'garbas/vim-snipmate'
-Bundle 'honza/snipmate-snippets'
+Bundle 'honza/vim-snippets'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
+Bundle 'rickhowe/diffchar.vim'
+Bundle 'chrisbra/SudoEdit.vim'
 
 "Vim Scripts Repos
 Bundle 'EasyMotion'
@@ -52,13 +60,23 @@ Bundle 'pythoncomplete'
 Bundle 'renamer.vim'
 Bundle 'The-NERD-Commenter'
 Bundle 'vim-indent-object'
+"Bundle 'phpfolding.vim'
+"Bundle 'VisIncr'
 "Bundle 'VimClojure'
 Bundle 'ZoomWin'
 Bundle 'drmikehenry/vim-fontsize'
+Plugin 'universal-ctags/ctags'
+Plugin 'ludovicchabant/vim-gutentags'
+Plugin 'majutsushi/tagbar'
+
+call vundle#end()
 
 ""Enable loading filetype and indentation plugins
 filetype plugin indent on
 syntax on
+
+"" Enable omnicompletion together with tag bar
+set omnifunc=syntaxcomplete#Complete
 
 "check if running in terminal and set to 256 colors
 if !has('gui_running')
@@ -150,7 +168,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")|execute("normal 
 set wildmode=list:longest,list:full
 set wildmenu
 "ignore certain types of files on completion
-set wildignore+=*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*.sqlite,_generated_media,imported-sass-frameworks,env,uploads
+set wildignore+=*.o,*.pyc,*.bak,*.exe,*.jpg,*.jpeg,*.png,*.gif,*$py.class,*.class,*.sqlite,_generated_media,imported-sass-frameworks,env,uploads,*/tmp/*,*.swp
 set completeopt=menu,preview,longest
 set pumheight=15 "menu contains a max of 15 items
 
@@ -196,7 +214,11 @@ set listchars=tab:▸\ ,eol:¬ "textmate style listing of invisible chars
 
 " Remove trailing whitespace from end of file
 autocmd BufWritePre * :%s/\s\+$//e
-autocmd BufEnter * lcd %:p:h
+
+" the commands below clashes with gitv
+let lcd_blacklist = ['gitv', 'help']
+autocmd BufEnter if index(lcd_blacklist, &ft) < 0 | lcd %:p:h
+"autocmd BufEnter * lcd %:p:h
 
 " automatically give executable permissions if file begins with #! and contains
 " '/bin/' in the path
@@ -237,6 +259,21 @@ imap <PageDown> <C-O><C-D><C-O><C-D>
 nmap <c-s> :up<CR>
 imap <c-s> <Esc>:up<CR>a
 vmap <c-s> :up<CR>
+
+" Tagbar mapping
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_ctags_bin = "/usr/bin/ctags"
+
+" set tag file location
+set tags+=./tags;/,tags
+
+" gutentags tagfile location
+"let g:gutentags_cache_dir = g:gutentags_project_root . ./.git/
+
+" completion enhancement
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' : '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " L is easier to type, and I never use the default behavior.
 noremap L $
@@ -405,15 +442,23 @@ nnoremap k gk
 " Ctrl-P
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ctrlp_dotfiles = 0
-let g:ctrlp_mru_files = 1
+"let g:ctrlp_mru_files = 1
 let g:ctrlp_use_caching = 1
-let g:ctrlp_working_path_mode = 2
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 20
-let g:ctrlp_custom_ignore = '\v[\/](node_modules|DS_Store|target|dist|build)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_extensions = ['tag']
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:15,results:30'
 
+" The ripgrep
 if executable('rg')
+  " Use ag over grep
   set grepprg=rg\ --color=never
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
 
@@ -429,6 +474,8 @@ noremap <leader>fa :CtrlPMixed<cr>
 noremap <leader>fr :CtrlP<cr><c-r>
 "search current directory
 noremap <leader>fd :CtrlPCurFile<cr>
+
+noremap <leader>. :CtrlPTag<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual Search
@@ -458,7 +505,8 @@ vnoremap <silent> # :call VisualSearch('b')<CR>
 " NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <silent> <F7> :Rooter<cr>:NERDTreeToggle
+let g:rooter_disable_map = 1
+"nmap <silent> <F7> :Rooter<cr>:NERDTreeToggle
 let NERDChristmasTree=1
 let NERDTreeCaseSensitiveSort = 1
 let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
@@ -473,6 +521,7 @@ let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let miniBufExplMapCTabSwitchBufs = 1
 " let miniBufExplModSelTarget = 1
 let miniBufExplUseSingleClick = 1
+"let g:miniBufExplAutoStart = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sparkup
@@ -484,7 +533,7 @@ let sparkupExecuteMapping = '<leader>z'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let delimitMate_autoclose = 1
 let delimitMate_balance_matchpairs = 1
-"au FileType xml,html,xhtml let b:delimitMate_matchpairs = \"(:),[:],{:}"
+au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " splice formerly threesome
@@ -498,11 +547,11 @@ let splice_initial_scrollbind_path = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " HTML
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let xml_use_xhtml = 1
+let xml_use_xhtml = 1
 let html_use_css = 1
 let html_number_lines = 0
-"let use_xhtml = 1
-"au FileType html imap <buffer> <tab> <c-p>
+let use_xhtml = 1
+au FileType html imap <buffer> <tab> <c-p>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Javascript / Coffeescript
@@ -532,14 +581,14 @@ function! DetectJinja()
 endfun
 
 " Automatic syntax highlighting for jinja files
-"au BufRead,BufNewFile *.html call DetectJinja()
+au BufRead,BufNewFile *.html call DetectJinja()
 
 " Automatic checking of pep8 compliance when saving
-au BufWrite *.py call Pep8()
+"au BufWrite *.py call Pep8()
 
 " Actionscript
 
 au BufNewFile,BufRead *.as set filetype=javascript
 
 " Automatic syntax highlighting for twig templates
-"au BufRead,BufNewFile *.html.twig set filetype=htmldjango
+au BufRead,BufNewFile *.html.twig set filetype=htmldjango
