@@ -39,7 +39,7 @@ export PIP_RESPECT_VIRTUALENV=true
 # updated ruby version
 PATH=$PATH:/home/kenneth/.gem/ruby/2.2.0/bin
 # PsySH for php
-PATH=$PATH:/home/kenneth/.composer/vendor/bin
+PATH=$PATH:/home/kenneth/.composer/vendor/bin:/home/kenneth/.config/composer/vendor/bin
 
 # fix grep
 my_grep_options=(--color=auto --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn)
@@ -73,7 +73,11 @@ opj() {
 
     if ls ./.env 2> /dev/null; then
         # export environmental variables for django=configurations
-        export "$(cat .env | grep -v ^# | grep -v ^$ | xargs -0)"
+        #for line in `cat .env | grep -v ^# | grep -v ^$`; do $line; done;
+        #while read -r line; do
+        #    export $line
+        #done <<(cat .env | grep -v ^# | grep -v ^$);
+        cat .env | grep -v ^# | grep -v ^$ | while read -r line; do export line; done;
     fi
 }
 
